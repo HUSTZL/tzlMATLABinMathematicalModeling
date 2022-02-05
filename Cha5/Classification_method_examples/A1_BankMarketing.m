@@ -50,7 +50,7 @@ tabulate(Ytest)
 
 %% 最近邻
 % 训练分类器
-knn = ClassificationKNN.fit(Xtrain,Ytrain,'Distance','seuclidean',...
+knn = fitcknn(Xtrain,Ytrain,'Distance','seuclidean',...
                             'NumNeighbors',5);
 % 进行预测
 [Y_knn, Yscore_knn] = knn.predict(Xtest);
@@ -64,10 +64,9 @@ C_knn = confusionmat(Ytest,Y_knn)
 dist = repmat({'normal'},1,width(bank)-1);
 dist(catPred) = {'mvmn'};
 % 训练分类器
-Nb = NaiveBayes.fit(Xtrain,Ytrain,'Distribution',dist);
+Nb = fitcnb(Xtrain,Ytrain,'DistributionNames',dist);
 % 进行预测
-Y_Nb = Nb.predict(Xtest);
-Yscore_Nb = Nb.posterior(Xtest);
+[Y_Nb,Yscore_Nb] = Nb.predict(Xtest);
 Yscore_Nb = Yscore_Nb(:,2);
 % 计算混淆矩阵
 disp('贝叶斯方法分类结果：')
@@ -115,13 +114,10 @@ disp('判别方法分类结果：')
 C_da = confusionmat(Ytest,Y_da)
 
 %% 支持向量机(SVM)
-% 设置最大迭代次数
-opts = statset('MaxIter',45000);
 % 训练分类器
-svmStruct = svmtrain(Xtrain,Ytrain,'kernel_function','linear','kktviolationlevel',0.2,'options',opts);
+svmStruct = fitcsvm(Xtrain,Ytrain);
 % 进行预测
-Y_svm = svmclassify(svmStruct,Xtest);
-Yscore_svm = svmscore(svmStruct, Xtest);
+[Y_svm,Yscore_svm] = svmStruct.predict(Xtest);
 Yscore_svm = (Yscore_svm - min(Yscore_svm))/range(Yscore_svm);
 % 计算混淆矩阵
 disp('SVM方法分类结果：')
