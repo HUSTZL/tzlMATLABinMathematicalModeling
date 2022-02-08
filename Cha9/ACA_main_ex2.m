@@ -9,7 +9,7 @@ clc
 t0 = clock;
 
 %导入数据
-citys=xlsread('D:\Matab_work\Ch8_spots_data.xlsx', 'B2:L12');
+citys=xlsread('Ch9_spots_data.xlsx', 'B2:L12');
 
 %% 计算城市间相互距离
 n = size(citys,1);

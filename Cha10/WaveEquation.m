@@ -57,4 +57,5 @@ for i = 1:n
     zlabel u
     M(i) = getframe;
 end
+movie(M)
 
