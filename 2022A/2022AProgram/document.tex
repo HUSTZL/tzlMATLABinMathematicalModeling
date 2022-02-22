@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\begin{document} 
+	\begin{algorithm} 
+		%\textsl{}\setstretch{1.8}
+		\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+		\renewcommand{\algorithmicensure}{\textbf{Output:}}
+		\caption{$v_t, T_{arrive}$ $Simulation$ $calculation$} 
+		\label{alg1} 
+		\begin{algorithmic}[1]
+			\REQUIRE $g,\,\mu_g,\,C_d,\,M,\,H,\,L_{race},\,v_w,\,\theta_w,\,\alpha_x,\,\theta_x$
+			\ENSURE $v_t, T_{arrive}$
+			\STATE $x \gets 0,\ $ $v_0 \gets 0,\ $
+			 $\theta \gets \theta_0 ,\ $ $flag \gets 0$
+			\WHILE{$x \leq L_{race}$}
+			\IF{$t = 0$}
+			\STATE $F \gets kMg$
+			\ELSE
+			\STATE $F \gets \frac{MP_t}{v_t}$
+			\ENDIF
+			\STATE $FA \gets 0.0293H^{\frac{29}{40}}M^{\frac{17}{40}}+0.0604$
+			\STATE $\theta_{before} \gets \theta ,\ \theta \gets \theta_x$
+			\IF{$\theta \neq \theta_{before}$}
+			\STATE	$flag \gets 1$
+			\ENDIF
+			\IF{$flag = 1 \ and\  v_t \leq v_{turn}$}
+			\STATE	$flag \gets 0$
+			\ENDIF
+			\IF{$flag = 0$}
+			\STATE $a \gets \frac{F-Mgsin\alpha_x-\mu_gMgcos\alpha_x-C_dFA({v_t}^2+{v_w}^2+2v_tv_wcos(\theta_w-\theta_x))}{M}$
+			\ELSE
+			\STATE $a \gets -cv_t$
+			\ENDIF
+			\STATE $v_{t+dt} \gets v_{t}+adt$
+			\STATE $x \gets x+v_{t}dt$
+			\STATE $t \gets t+dt$
+			\ENDWHILE 		
+			\STATE $T_{arrive} \gets t$
+		\end{algorithmic} 
+	\end{algorithm}
+\end{document}

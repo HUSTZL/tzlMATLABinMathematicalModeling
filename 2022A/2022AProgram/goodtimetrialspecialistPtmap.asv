@@ -1,0 +1,30 @@
+% x=[0 40 55 59];
+% y=[3.5 4.25 4.83 7.23]
+% ft = fittype( 'k/(1-a*exp(-b*x))^(1/(1-m))', 'independent', 'x', 'dependent', 'y' );
+% opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
+% opts.Lower = [0 0 0 0];
+% opts.StartPoint = [0 0 16 0];
+% [fitresult, gof] = fit( x', y', ft, opts )
+% figure
+% t = 0:0.1:60;
+% P = fitresult(t);
+% plot(P)
+% figure
+% P(1) = 15.6
+% for t = 1:6000
+%     P(t+1) = P(t) - 0.01*(P(t)*0.1*(1-P(t)/16));
+% end
+% plot(P)
+figure
+t = 0:0.01:60.2;
+P = 4.78938020./(1+(-0.87373205.*(0.84150179.^t))); %Men
+P(6000:6020) = 18.75;
+subplot(2,1,1)
+plot(t,P);
+set(gca,'Xtick',[0.1 1 2 5 10 30 60]);
+set(gca,'Xscale','log');
+xlabel('t/min')
+ylabel('P/(Watts per kg)')
+title('Power Curve of Average Men Time Trial Specialist')
+subplot(2,1,2)
+P = 4.78938020./(1+(-0.87373205.*(0.84150179.^t))); %Women
